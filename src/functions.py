@@ -38,3 +38,20 @@ def get_top_vacancies(sorted_list, top_numb=5):
         return sorted_list[0:len(sorted_list)]
     else:
         return sorted_list[0:int(top_numb)]
+
+
+def print_vacancies(top_list):
+    if len(top_list) == 0:
+        return []
+    else:
+        for vacancy in top_list:
+            if vacancy["salary"]["from"] is None:
+                vacancy["salary"]["from"] = "Не указано"
+            if vacancy["salary"]["to"] is None:
+                vacancy["salary"]["to"] = "Не указано"
+            print(f"Название: {vacancy["name"]}\n"
+                  f"Ссылка: {vacancy["url"]}\n"
+                  f"Зарплата (от - до): {vacancy["salary"]["from"]} - {vacancy["salary"]["to"]}\n"
+                  f"Требования: {vacancy["requirements"]}\n"
+                  f"Требуемый опыт: {vacancy["experience"]}\n"
+                  f"Область: {vacancy["area"]}\n")
