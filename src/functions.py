@@ -29,4 +29,12 @@ def sort_vacancies(got_list):
     else:
         sorted_list = sorted(got_list, key=lambda x: x['mid_salary'], reverse=True)
         return sorted_list
-    
+
+
+def get_top_vacancies(sorted_list, top_numb=5):
+    if len(sorted_list) in [0, 1]:
+        return sorted_list
+    elif top_numb > len(sorted_list):
+        return sorted_list[0:len(sorted_list)]
+    else:
+        return sorted_list[0:int(top_numb)]
