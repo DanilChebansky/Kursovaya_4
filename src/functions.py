@@ -55,3 +55,27 @@ def print_vacancies(top_list):
                   f"Требования: {vacancy["requirements"]}\n"
                   f"Требуемый опыт: {vacancy["experience"]}\n"
                   f"Область: {vacancy["area"]}\n")
+
+
+def user_interaction(list_):
+    try:
+        top_n = int(input("Введите количество вакансий для вывода в топ N: "))
+    except ValueError:
+        top_n = 5
+    filter_words = input("Введите ключевые слова для фильтрации вакансий: ").split(",")
+    try:
+        min_salary = int(input("Введите минимальную зарплату: "))
+    except ValueError:
+        min_salary = 20000
+    try:
+        max_salary = int(input("Введите максимальную зарплату: "))
+    except ValueError:
+        max_salary = 200000
+
+    filtered_vacancies = filter_vacancies(list_, filter_words)
+
+    ranged_vacancies = get_vacancies_by_salary(filtered_vacancies, min_salary, max_salary)
+
+    sorted_vacancies = sort_vacancies(ranged_vacancies)
+    top_vacancies = get_top_vacancies(sorted_vacancies, top_n)
+    print_vacancies(top_vacancies)
