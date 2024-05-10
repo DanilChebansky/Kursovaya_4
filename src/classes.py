@@ -71,3 +71,52 @@ class Vacancy:
             "area": self.area,
             "mid_salary": self.mid_salary
         }
+
+
+class HeadJsonEditor(ABC):
+    """Родительский класс для редактирования вакансий в JSON-файле"""
+    @abstractmethod
+    def vacancy_adder(self, vacancy):
+        pass
+
+    @abstractmethod
+    def vacancy_deliter(self, vacancy):
+        pass
+
+    @abstractmethod
+    def vacancy_reader(self):
+        pass
+
+
+class JsonEditor(HeadJsonEditor):
+    """Класс для сохранения вакансий в JSON-файл"""
+    def __init__(self, vacancies):
+        with open("vacancies.json", "w", encoding="utf-8") as editing_file:
+            json.dump(vacancies, editing_file)
+
+    def vacancy_adder(self, vacancy):
+        """Добавляет вакансии в JSON-файл"""
+        new_vacancy_list = []
+        with open("vacancies.json", "r+", encoding="utf-8") as appending_vacancy:
+            for vacanc in json.load(appending_vacancy):
+                new_vacancy_list.append(vacanc)
+            new_vacancy_list.append(vacancy)
+        with open("vacancies.json", "w", encoding="utf-8") as appending_vacancy:
+            appending_vacancy.write(json.dumps(new_vacancy_list))
+
+    def vacancy_reader(self):
+        """Выводит вакансии из JSON-файла"""
+        with open("vacancies.json", encoding="utf-8") as reading_vacancy:
+            return json.load(reading_vacancy)
+
+    def vacancy_deliter(self, vacancy):
+        """Удаляет выбранные вакансии в JSON-файле"""
+        new_vacancy_list = []
+        with open("vacancies.json", "r+", encoding="utf-8") as deliting_vacancy:
+            for vacanc in json.load(deliting_vacancy):
+                if vacancy in vacanc["name"]:
+                    continue
+                else:
+                    new_vacancy_list.append(vacanc)
+        with open("vacancies.json", "w", encoding="utf-8") as appending_vacancy:
+            appending_vacancy.write(json.dumps(new_vacancy_list))
